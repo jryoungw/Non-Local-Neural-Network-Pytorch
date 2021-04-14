@@ -45,7 +45,7 @@ class NLNN(nn.Module):
             x_theta = x_theta.view(x.size()[0], -1, self.out_channels)
             x_phi = x_phi.view(x.size()[0], self.out_channels, -1)
             x_inter = torch.matmul(x_theta, x_phi)
-            x_inter = self.softmax(x_inter)
+            x_inter = self.softmax(x_inter, axis=0)
 
             x_inter = torch.matmul(x_inter, x_g)
             x_inter = x_inter.view(x.size()[0], x.size()[1]//self.shrink_factor, *x.size()[2:])
@@ -62,7 +62,7 @@ class NLNN(nn.Module):
             x_theta = x_theta.view(x.size()[0], -1, self.in_channels)
             x_phi = x_phi.view(x.size()[0], self.in_channels, -1)
             x_inter = torch.matmul(x_theta, x_phi)
-            x_inter = self.softmax(x_inter)
+            x_inter = self.softmax(x_inter, axis=0)
             x_inter = torch.matmul(x_inter, x_g)
             x_inter = x_inter.view(x.size()[0], x.size()[1]//self.shrink_factor, *x.size()[2:])
             x_last = self.conv4(x_inter)
