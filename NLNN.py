@@ -10,6 +10,7 @@ class NLNN(nn.Module):
         self.out_channels = in_channels // shrink_factor
         self.shrink_factor = shrink_factor
         self.instance = instance
+        self.dim = dim
         assert self.dim in [1,2,3]
         if self.dim == 1:
             self.conv1 = nn.Conv1d(self.in_channels, self.out_channels, self.kernel_size)
