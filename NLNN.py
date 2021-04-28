@@ -12,24 +12,11 @@ class NLNN(nn.Module):
         self.instance = instance
         self.dim = dim
         assert self.dim in [1,2,3]
-        if self.dim == 1:
-            self.conv1 = nn.Conv1d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv2 = nn.Conv1d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv3 = nn.Conv1d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv4 = nn.Conv1d(self.out_channels, self.in_channels, self.kernel_size)
-            self.concatConv = nn.Conv1d(self.in_channels, 1, self.kernel_size)
-        elif self.dim == 2:
-            self.conv1 = nn.Conv2d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv2 = nn.Conv2d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv3 = nn.Conv2d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv4 = nn.Conv2d(self.out_channels, self.in_channels, self.kernel_size)
-            self.concatConv = nn.Conv2d(self.in_channels, 1, self.kernel_size)
-        else:
-            self.conv1 = nn.Conv3d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv2 = nn.Conv3d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv3 = nn.Conv3d(self.in_channels, self.out_channels, self.kernel_size)
-            self.conv4 = nn.Conv3d(self.out_channels, self.in_channels, self.kernel_size)
-            self.concatConv = nn.Conv3d(self.in_channels, 1, self.kernel_size)
+        exec(f"self.conv1 = nn.Conv{self.dim}d(self.in_channels, self.out_channels, self.kernel_size)")
+        exec(f"self.conv2 = nn.Conv{self.dim}d(self.in_channels, self.out_channels, self.kernel_size)")
+        exec(f"self.conv3 = nn.Conv{self.dim}d(self.in_channels, self.out_channels, self.kernel_size)")
+        exec(f"self.conv4 = nn.Conv{self.dim}d(self.in_channels, self.out_channels, self.kernel_size)")
+        exec(f"self.concatConv = nn.Conv{self.dim}d(self.in_channels, 1, self.kernel_size)")
         self.softmax = nn.Softmax()
         self.relu = nn.ReLU()
     def forward(self, x):
